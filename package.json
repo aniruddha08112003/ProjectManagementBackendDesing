@@ -1,0 +1,15 @@
+{
+  "name": "project_management_backend",
+  "version": "1.0.0",
+  "description": "project management application backend",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "3.6.2"
+  }
+}
