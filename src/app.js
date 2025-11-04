@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import authRouter from "./routes/auth.routes.js";
 
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(cors({
 import healthCheckRouter  from "./routes/healthCheck.routes.js";
 
 app.use("/api/v1/healthcheck", healthCheckRouter);
+app.use("/api/v1/auth", authRouter);
 
 
 

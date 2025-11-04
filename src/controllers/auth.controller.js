@@ -2,7 +2,7 @@ import User from '../models/user.model.js';
 import apiResponse from '../utils/apiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import apiError from '../utils/apiError.js';
-import sendEmail from '../utils/sendEmail.js';
+import {sendEmail} from '../utils/mail.js';
 import { emailVerificationMailgenContent } from '../utils/mail.js';
 const generateAccessTokenAndRefreshToken = async (userId)=>{
     try {
@@ -22,7 +22,7 @@ const generateAccessTokenAndRefreshToken = async (userId)=>{
 const registerUser = asyncHandler(async (req, res) => {
     const { username, email, password ,role} = req.body;
 
-    const existingUser = User.findOne({
+    const existingUser = await User.findOne({
         $or: [{ email }, { username }]
     })
 
@@ -53,7 +53,15 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new apiError(500, "Something went wrong while creating user");
     }
 
-   return  res.status(201).json(new apiResponse(true, 200, "User registered successfully. Please check your email to verify your account.", {user:createdUser}));
+   return res
+     .status(201)
+     .json(
+       new apiResponse(
+         200,
+         { user: createdUser },
+         "User registered successfully. Please check your email to verify your account.",
+       ),
+     );
 
 })
 
